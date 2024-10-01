@@ -1,5 +1,6 @@
 package models.dao.impl;
 
+import db.DbException;
 import models.dao.BookDao;
 import models.entities.books.Book;
 
@@ -19,6 +20,7 @@ public class BookDaoJ implements BookDao {
     @Override
     public void insert(Book book) {
         em.getTransaction().begin();
+        System.out.println("teste => " + book.getTitle());
         em.persist(book);
         em.getTransaction().commit();
         System.out.println("Done, Insert!");
@@ -26,22 +28,44 @@ public class BookDaoJ implements BookDao {
 
     @Override
     public void update(Book book) {
+        
 
     }
 
     @Override
     public void deleteById(Integer Id) {
+        try{
+            Book b = em.find(Book.class, Id);
 
+            System.out.println("teste => " + b.getTitle());
+
+            if (b != null) {
+                em.getTransaction().begin();
+                em.remove(b);
+                em.getTransaction().commit();
+                System.out.println("Deleted Book name: " + b.getTitle());
+            } else {
+                throw new DbException("Error: Book with Isbn: " + Id + " does note exist!");
+            }
+        } catch (RuntimeException e) {
+            throw new DbException("Error: Unexpected error!");
+        }
     }
 
     @Override
     public Book findById(Integer Id) {
-        return null;
+        return em.find(Book.class, Id);
     }
 
     @Override
-    public Book findByName(String Name) {
-        return null;
+    public Book findByName(String name) {
+        Book book = findAll().stream().filter(b -> b.getTitle().equalsIgnoreCase(name)).findFirst().orElse(null);
+
+        if (book == null) {
+            throw new DbException("Book not founded by name!");
+        }
+
+        return book;
     }
 
     @Override
