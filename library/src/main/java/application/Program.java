@@ -1,33 +1,23 @@
 package application;
 
-import models.entities.persons.Author;
-import models.entities.persons.Member;
+import db.DB;
+import models.dao.BookDao;
+import models.dao.impl.BookDaoJ;
+import models.entities.books.Book;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.time.LocalDate;
+import java.util.List;
 
 public class Program {
     public static void main(String[] args) {
+        DB.connect();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Library");
-        EntityManager em = emf.createEntityManager();
+        BookDaoJ bookDao = new BookDaoJ(DB.getEntityManager());
+        List<Book> books = bookDao.findAll();
 
-        Member m1 = new Member(null, "Vitor", "vitor@gmail.com", "Salvador","71996144188", LocalDate.now());
-        Author a1 = new Author(null, "Oda", "Japan", "Write One Piece");
-        System.out.println(m1);
-        System.out.println(a1);
+        for (Book book : books) {
+            System.out.println(book.getTitle());
+        }
 
-        em.getTransaction().begin();
-
-        em.persist(m1);
-        em.persist(a1);
-
-        em.getTransaction().commit();
-
-        System.out.println("Ready! ");
-        em.close();
-        emf.close();
+        DB.disconnect();
     }
 }

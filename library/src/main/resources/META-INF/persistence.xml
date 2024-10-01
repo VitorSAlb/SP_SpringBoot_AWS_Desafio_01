@@ -18,6 +18,8 @@
             <!-- IMPORTANTE se eu colocar 'create' eu posso recriar o meu banco de dados-->
             <property name="hibernate.hbm2ddl.auto" value="update" />
 
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
         </properties>
