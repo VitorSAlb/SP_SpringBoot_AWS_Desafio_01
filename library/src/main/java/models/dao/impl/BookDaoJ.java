@@ -18,7 +18,10 @@ public class BookDaoJ implements BookDao {
 
     @Override
     public void insert(Book book) {
-
+        em.getTransaction().begin();
+        em.persist(book);
+        em.getTransaction().commit();
+        System.out.println("Done, Insert!");
     }
 
     @Override
