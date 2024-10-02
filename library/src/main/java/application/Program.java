@@ -17,11 +17,13 @@ public class Program {
         AuthorService as = new AuthorService();
         BookService bs = new BookService();
 
-        // Testes implementação LIVRO
-        //tc.testBook();
+
 
         // TESTS AUTHOR
-        //tc.testAuthor();
+        tc.testAuthor();
+
+        // Testes implementação LIVRO
+        tc.testBook();
 
         //
 

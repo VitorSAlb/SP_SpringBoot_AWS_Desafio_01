@@ -1,19 +1,14 @@
 package models.entities.books;
 
-//import models.entities.persons.Author;
+import models.entities.persons.Author;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "books")
-public class Book implements Comparable<Book>{
-// MUDAR A IMPLEMENTAÇÃO DE AUTORES e GENEROS
+public class Book implements Comparable<Book> {
 
     @Id
     @Column(unique = true)
@@ -23,15 +18,16 @@ public class Book implements Comparable<Book>{
     private LocalDate publishDate;
     private Integer quantity;
 
-    private String author;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
+
     private String gender;
-
-
 
     public Book() {
     }
 
-    public Book(Integer isbn, String title, LocalDate publishDate, Integer quantity, String author, String gender) {
+    public Book(Integer isbn, String title, LocalDate publishDate, Integer quantity, Author author, String gender) {
         this.isbn = isbn;
         this.title = title;
         this.publishDate = publishDate;
@@ -43,6 +39,7 @@ public class Book implements Comparable<Book>{
     public Integer getIsbn() {
         return isbn;
     }
+
 
     public String getTitle() {
         return title;
@@ -68,11 +65,11 @@ public class Book implements Comparable<Book>{
         this.quantity = quantity;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -94,7 +91,7 @@ public class Book implements Comparable<Book>{
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(isbn);
+        return Objects.hash(isbn);
     }
 
     @Override
@@ -109,8 +106,8 @@ public class Book implements Comparable<Book>{
                 ", title='" + title + '\'' +
                 ", publishDate=" + publishDate +
                 ", quantity=" + quantity +
-                ", gender=" + gender +
-                ", author=" + author +
+                ", author=" + author.getName() +
+                ", gender='" + gender + '\'' +
                 '}';
     }
 }
