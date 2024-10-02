@@ -3,7 +3,6 @@ package models.entities.persons;
 import models.entities.books.Book;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
