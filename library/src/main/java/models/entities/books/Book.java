@@ -14,6 +14,7 @@ import java.util.TreeSet;
 @Table(name = "books")
 public class Book implements Comparable<Book>{
 // MUDAR A IMPLEMENTAÇÃO DE AUTORES e GENEROS
+
     @Id
     @Column
     private Integer isbn;

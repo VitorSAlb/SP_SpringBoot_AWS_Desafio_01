@@ -5,6 +5,7 @@ import models.dao.BookDao;
 import models.entities.books.Book;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -19,24 +20,46 @@ public class BookDaoJ implements BookDao {
 
     @Override
     public void insert(Book book) {
-        em.getTransaction().begin();
-        System.out.println("teste => " + book.getTitle());
-        em.persist(book);
-        em.getTransaction().commit();
-        System.out.println("Done, Insert!");
+        Book b = findById(book.getIsbn());
+
+        if (b == null) {
+            try {
+                em.getTransaction().begin();
+                System.out.println("teste => " + book.getTitle());
+                em.persist(book);
+                em.getTransaction().commit();
+                System.out.println("Done, Insert!");
+            } catch (RuntimeException e) {
+                throw new DbException("Error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Book: " + b.getTitle() + " already exists!");
+        }
+
+
     }
 
     @Override
     public void update(Book book) {
-        
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(book);
+            transaction.commit();
+            System.out.println("Update is done!");
+        } catch (RuntimeException e) {
+            throw new DbException(e.getMessage());
+        }
 
     }
 
     @Override
     public void deleteById(Integer Id) {
         try{
-            Book b = em.find(Book.class, Id);
+            Book b = findById(Id);
 
+            // TESTE sistema
             System.out.println("teste => " + b.getTitle());
 
             if (b != null) {
