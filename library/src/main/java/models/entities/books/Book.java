@@ -16,11 +16,13 @@ public class Book implements Comparable<Book>{
 // MUDAR A IMPLEMENTAÇÃO DE AUTORES e GENEROS
 
     @Id
-    @Column
+    @Column(unique = true)
     private Integer isbn;
+
     private String title;
     private LocalDate publishDate;
     private Integer quantity;
+
     private String author;
     private String gender;
 

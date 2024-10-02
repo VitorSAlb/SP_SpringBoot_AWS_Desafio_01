@@ -62,7 +62,7 @@ public class BookDaoJ implements BookDao {
             // TESTE sistema
             System.out.println("teste => " + b.getTitle());
 
-            if (b != null) {
+            if (b.getIsbn() != null) {
                 em.getTransaction().begin();
                 em.remove(b);
                 em.getTransaction().commit();
@@ -85,7 +85,7 @@ public class BookDaoJ implements BookDao {
         Book book = findAll().stream().filter(b -> b.getTitle().equalsIgnoreCase(name)).findFirst().orElse(null);
 
         if (book == null) {
-            throw new DbException("Book not founded by name!");
+            System.out.println("Book not founded by name!");
         }
 
         return book;
