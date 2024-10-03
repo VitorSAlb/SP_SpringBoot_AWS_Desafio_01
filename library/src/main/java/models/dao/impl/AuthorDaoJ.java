@@ -18,22 +18,16 @@ public class AuthorDaoJ implements GenericDAO<Author> {
 
     @Override
     public void insert(Author author) {
-        Author a = findByName(author.getName());
-
-        if (a == null) {
-            try {
-                em.getTransaction().begin();
-                em.persist(author);
-                em.getTransaction().commit();
-                System.out.println("Done, insert! Generated ID: " + author.getId());
-            } catch (RuntimeException e) {
-                if (em.getTransaction().isActive()) {
-                    em.getTransaction().rollback();
-                }
-                throw new DefaultException("Error insert: " + e.getMessage());
+        try {
+            em.getTransaction().begin();
+            em.persist(author);
+            em.getTransaction().commit();
+            System.out.println("Done, insert! Generated ID: " + author.getId());
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
-        } else {
-            System.out.println("Author: " + a.getName() + " already exists!");
+            throw new DefaultException("Error insert: " + e.getMessage());
         }
     }
 
@@ -53,8 +47,6 @@ public class AuthorDaoJ implements GenericDAO<Author> {
     public void deleteById(Integer id) {
         Author a = findById(id);
         try{
-            // System.out.println("Test => " + a.getName());
-
             if(a.getId() != null) {
                 em.getTransaction().begin();
                 em.remove(a);

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BookDaoJ implements GenericDAO<Book> {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public BookDaoJ(EntityManager em) {
         this.em = em;
@@ -20,23 +20,17 @@ public class BookDaoJ implements GenericDAO<Book> {
 
     @Override
     public void insert(Book book) {
-        Book b = findById(book.getIsbn());
-
-        if (b == null) {
-            try {
-                em.getTransaction().begin();
-                //System.out.println("test => " + book.getTitle());
-                em.persist(book);
-                em.getTransaction().commit();
-                System.out.println("Insert done!");
-            } catch (RuntimeException e) {
-                throw new DefaultException("Error: " + e.getMessage());
+        try {
+            em.getTransaction().begin();
+            em.persist(book);
+            em.getTransaction().commit();
+            System.out.println("Insert done!");
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
-        } else {
-            System.out.println("Book: " + b.getTitle() + " already exists!");
+            throw new DefaultException("Error insert: " + e.getMessage());
         }
-
-
     }
 
     @Override
@@ -56,8 +50,6 @@ public class BookDaoJ implements GenericDAO<Book> {
     public void deleteById(Integer Id) {
         try{
             Book b = findById(Id);
-            // System.out.println("teste => " + b.getTitle());
-
             if (b.getIsbn() != null) {
                 em.getTransaction().begin();
                 em.remove(b);
@@ -74,7 +66,6 @@ public class BookDaoJ implements GenericDAO<Book> {
     @Override
     public void deleteByName(String name) {
         Book b = findByName(name);
-
         try{
             if(b.getIsbn() != null) {
                 em.getTransaction().begin();

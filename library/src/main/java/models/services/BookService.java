@@ -1,6 +1,7 @@
 package models.services;
 
 import db.DB;
+import exception.DefaultException;
 import models.dao.DaoFactory;
 import models.dao.impl.BookDaoJ;
 import models.entities.books.Book;
@@ -15,6 +16,20 @@ public class BookService {
     }
 
     public void newBook(Book book) {
+
+        Book existingBook = searchBook(book.getIsbn());
+        if (existingBook != null) {
+            throw new DefaultException("Book: " + book.getTitle() + " already exists!");
+        }
+
+        if (book.getIsbn().toString().length() > 12) {
+            throw new DefaultException("Your ISBN has more than 12 digits");
+        }
+
+        if (book.getQuantity() <= 0 ) {
+            throw new DefaultException("At the very least, you need to have a book for insertion");
+        }
+
         bookDAO.insert(book);
     }
 

@@ -1,5 +1,6 @@
 package models.services;
 
+import exception.DefaultException;
 import models.dao.DaoFactory;
 import models.dao.impl.MemberDaoJ;
 import models.entities.persons.Member;
@@ -14,6 +15,12 @@ public class MemberService {
     }
 
     public void newMember(Member member) {
+
+        Member m = searchMember(member.getEmail());
+        if (m != null) {
+            throw new DefaultException("Member: " + m.getName() + " already exists!");
+        }
+
         memberDao.insert(member);
     }
 

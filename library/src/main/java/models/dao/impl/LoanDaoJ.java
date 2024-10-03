@@ -24,8 +24,11 @@ public class LoanDaoJ implements LoanDAO {
             em.persist(loan);
             em.getTransaction().commit();
             System.out.println("Insert done!");
-        } catch (RuntimeException e){
-            throw new DefaultException("Error Insert: " + e.getMessage());
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new DefaultException("Error insert: " + e.getMessage());
         }
     }
 

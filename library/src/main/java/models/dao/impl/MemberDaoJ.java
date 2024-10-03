@@ -54,8 +54,6 @@ public class MemberDaoJ implements GenericDAO<Member> {
     public void deleteById(Integer Id) {
         Member m = findById(Id);
         try{
-            // System.out.println("Test => " + a.getName());
-
             if(m.getId() != null) {
                 em.getTransaction().begin();
                 em.remove(m);
