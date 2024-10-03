@@ -1,6 +1,7 @@
 package application;
 
 import exception.DefaultException;
+import models.controllers.LoanController;
 import models.entities.books.Book;
 import models.entities.persons.Author;
 import models.entities.persons.Member;
@@ -9,6 +10,7 @@ import models.services.BookService;
 import models.services.MemberService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
@@ -20,8 +22,13 @@ public class UI {
     private static final BookService bs = new BookService();
     private static final AuthorService as = new AuthorService();
     private static final MemberService ms = new MemberService();
+
+    private static final LoanController lc = new LoanController();
+
     private static final Scanner sc = new Scanner(System.in);
+
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public UI() {
     }
@@ -135,6 +142,25 @@ public class UI {
         ms.deleteMember("Clara");
         ms.listMembers();
     } // Apgar teste
+
+    public void testLoan() {
+
+        String dateTime = "10/03/2024 12:00";
+        lc.borrowBook("vitor@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("lis@gmail.com", 1, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("carlos@gmail.com", 1, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("carlos@gmail.com", 2, LocalDateTime.parse(dateTime, fmt1));
+
+        lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
+
+
+        lc.returnBook("vitor@gmail.com", 312, LocalDateTime.parse("14/03/2024 12:00", fmt1));
+        lc.returnBook("lis@gmail.com", 1, LocalDateTime.parse("15/03/2024 12:00", fmt1));
+
+        //lc.returnBook("carlos@gmail.com", 2, LocalDateTime.parse("17/03/2024 12:00", fmt1));;
+    }
 
     public void bannerUI() {
         System.out.println("-------------------------");

@@ -24,7 +24,7 @@ public class LoanService {
         Book book = loan.getBook();
 
         if(loan.getBook().getQuantity() <= 0 ) {
-            throw new DefaultException("This boos isn't available for loan!");
+            throw new DefaultException("This book isn't available for loan, Book name: " + loan.getBook().getTitle() );
         }
 
         List<Loan> activeLoans = loanDAO.findLoansByMember(loan.getMember());
@@ -39,11 +39,12 @@ public class LoanService {
 
     public void returnLoan(Loan loan, LocalDateTime returnLDT) {
 
-        if (returnLDT.isAfter(loan.getReturnDate())) {
+        if (returnLDT.isAfter(loan.getLoanDate().plusDays(5))) {
             double fine = (returnLDT.getDayOfMonth() - loan.getReturnDate().getDayOfMonth()) * 5.0;
             loan.setFine(fine);
         }
 
+        loan.setReturnDate(returnLDT);
         loan.setStateLoan(StateLoan.COMPLETED);
         loanDAO.update(loan);
 

@@ -22,9 +22,10 @@ public class Program {
 //        ui.bannerUI();
 //        ui.mainMenu();
 
-        ui.testMember();
+        //ui.testMember();
         //ui.createBookUI();
 
+        ui.testLoan();
 
         DB.disconnect();
     }

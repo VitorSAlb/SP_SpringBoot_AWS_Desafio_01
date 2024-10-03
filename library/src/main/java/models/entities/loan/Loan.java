@@ -38,7 +38,7 @@ public class Loan {
         this.book = book;
         this.member = member;
         this.loanDate = loanDate;
-        this.returnDate = loanDate.plusDays(5);
+        this.returnDate = null;
         this.stateLoan = StateLoan.ACTIVE;
         this.fine = 0.0;
     }
