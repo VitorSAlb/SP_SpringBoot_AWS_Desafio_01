@@ -1,7 +1,7 @@
 package models.dao.impl;
 
 import exception.DefaultException;
-import models.dao.genericDAO;
+import models.dao.GenericDAO;
 import models.entities.persons.Member;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
-public class MemberDaoJ implements genericDAO<Member> {
+public class MemberDaoJ implements GenericDAO<Member> {
 
     private final EntityManager em;
 
@@ -40,12 +40,10 @@ public class MemberDaoJ implements genericDAO<Member> {
 
     @Override
     public void update(Member member) {
-        EntityTransaction transaction = em.getTransaction();
-
         try {
-            transaction.begin();
+            em.getTransaction().begin();
             em.merge(member);
-            transaction.commit();
+            em.getTransaction().commit();
             System.out.println("Update is done!");
         } catch (RuntimeException e) {
             throw new DefaultException("Error Update: " + e.getMessage());

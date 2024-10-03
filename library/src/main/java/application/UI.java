@@ -134,7 +134,7 @@ public class UI {
         System.out.println(as.searchAuthor("carlos"));
         ms.deleteMember("Clara");
         ms.listMembers();
-    }
+    } // Apgar teste
 
     public void bannerUI() {
         System.out.println("-------------------------");

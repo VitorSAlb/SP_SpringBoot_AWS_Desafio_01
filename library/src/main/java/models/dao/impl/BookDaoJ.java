@@ -1,7 +1,7 @@
 package models.dao.impl;
 
 import exception.DefaultException;
-import models.dao.genericDAO;
+import models.dao.GenericDAO;
 import models.entities.books.Book;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
-public class BookDaoJ implements genericDAO<Book> {
+public class BookDaoJ implements GenericDAO<Book> {
 
     private EntityManager em;
 
@@ -25,10 +25,10 @@ public class BookDaoJ implements genericDAO<Book> {
         if (b == null) {
             try {
                 em.getTransaction().begin();
-                System.out.println("teste => " + book.getTitle());
+                //System.out.println("test => " + book.getTitle());
                 em.persist(book);
                 em.getTransaction().commit();
-                System.out.println("Done, Insert!");
+                System.out.println("Insert done!");
             } catch (RuntimeException e) {
                 throw new DefaultException("Error: " + e.getMessage());
             }
@@ -41,13 +41,11 @@ public class BookDaoJ implements genericDAO<Book> {
 
     @Override
     public void update(Book book) {
-        EntityTransaction transaction = em.getTransaction();
-
         try {
-            transaction.begin();
+            em.getTransaction().begin();
             em.merge(book);
-            transaction.commit();
-            System.out.println("Update is done!");
+            em.getTransaction().commit();
+            System.out.println("Update done!");
         } catch (RuntimeException e) {
             throw new DefaultException(e.getMessage());
         }

@@ -34,13 +34,13 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Book book, Member member, LocalDateTime loanDate, LocalDateTime returnDate, StateLoan stateLoan, Double fine) {
+    public Loan(Book book, Member member, LocalDateTime loanDate, StateLoan stateLoan) {
         this.book = book;
         this.member = member;
         this.loanDate = loanDate;
-        this.returnDate = returnDate;
+        this.returnDate = loanDate.plusDays(5);
         this.stateLoan = stateLoan;
-        this.fine = fine;
+        this.fine = 0.0;
     }
 
     public Integer getId() {

@@ -11,6 +11,9 @@ public class BookService {
 
     private final BookDaoJ bookDAO = DaoFactory.createBookDao();
 
+    public BookService() {
+    }
+
     public void newBook(Book book) {
         bookDAO.insert(book);
     }

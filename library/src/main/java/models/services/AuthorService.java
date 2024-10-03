@@ -11,6 +11,9 @@ public class AuthorService {
 
     private final AuthorDaoJ authorDao = DaoFactory.createAuthorDao();
 
+    public AuthorService() {
+    }
+
     public void newAuthor(Author author) {
         authorDao.insert(author);
     }

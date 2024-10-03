@@ -1,10 +1,8 @@
 package models.dao;
 
-import models.entities.books.Book;
-
 import java.util.List;
 
-public interface genericDAO<T> {
+public interface GenericDAO<T> {
 
     void insert(T t);
     void update(T t);

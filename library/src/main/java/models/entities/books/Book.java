@@ -113,9 +113,9 @@ public class Book implements Comparable<Book> {
     }
 
     //VERIFICAR ISSO DAQ, NN SEI SE VAI FUNICONAR NA CLASSE LOAN TBM
-    public void loanBook(Book book) {
+    public void loanBook() {
         if (quantity <= 0 ){
-            throw new DefaultException("This book isn't available for loan. Book ISBN: " + book.getIsbn());
+            throw new DefaultException("This book isn't available for loan. Book ISBN: " + isbn);
         }
         quantity--;
     }

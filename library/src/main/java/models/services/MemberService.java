@@ -10,6 +10,9 @@ public class MemberService {
 
     private final MemberDaoJ memberDao = DaoFactory.createMemberDao();
 
+    public MemberService() {
+    }
+
     public void newMember(Member member) {
         memberDao.insert(member);
     }
