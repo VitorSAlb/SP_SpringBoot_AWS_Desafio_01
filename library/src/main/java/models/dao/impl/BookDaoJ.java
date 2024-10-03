@@ -1,7 +1,7 @@
 package models.dao.impl;
 
 import db.DbException;
-import models.dao.BookDao;
+import models.dao.genericDAO;
 import models.entities.books.Book;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
-public class BookDaoJ implements BookDao {
+public class BookDaoJ implements genericDAO<Book> {
 
     private EntityManager em;
 
@@ -58,9 +58,7 @@ public class BookDaoJ implements BookDao {
     public void deleteById(Integer Id) {
         try{
             Book b = findById(Id);
-
-            // TESTE sistema
-            System.out.println("teste => " + b.getTitle());
+            // System.out.println("teste => " + b.getTitle());
 
             if (b.getIsbn() != null) {
                 em.getTransaction().begin();
@@ -73,6 +71,25 @@ public class BookDaoJ implements BookDao {
         } catch (RuntimeException e) {
             throw new DbException("Error: Unexpected error!");
         }
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        Book b = findByName(name);
+
+        try{
+            if(b.getIsbn() != null) {
+                em.getTransaction().begin();
+                em.remove(b);
+                em.getTransaction().commit();
+                System.out.println("Deleted Author name: " + b.getTitle());
+            } else {
+                System.out.println("Error delete: Book with Name: " + name + " does not exist!");
+            }
+        } catch (RuntimeException e) {
+            throw new DbException("Error delete: " + e.getMessage());
+        }
+
     }
 
     @Override

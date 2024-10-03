@@ -1,6 +1,7 @@
 package models.services;
 
 import db.DB;
+import models.dao.DaoFactory;
 import models.dao.impl.AuthorDaoJ;
 import models.entities.persons.Author;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class AuthorService {
 
-    private AuthorDaoJ authorDao = new AuthorDaoJ(DB.getEntityManager());
+    private final AuthorDaoJ authorDao = DaoFactory.createAuthorDao();
 
     public void newAuthor(Author author) {
         authorDao.insert(author);

@@ -1,5 +1,6 @@
 package application;
 
+import db.DbException;
 import models.entities.books.Book;
 import models.entities.persons.Author;
 import models.services.AuthorService;
@@ -14,10 +15,10 @@ import java.util.Scanner;
 
 public class UI {
 
-    private static BookService bs = new BookService();
-    private static AuthorService as = new AuthorService();
-    private static Scanner sc = new Scanner(System.in);
-    private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final BookService bs = new BookService();
+    private static final AuthorService as = new AuthorService();
+    private static final Scanner sc = new Scanner(System.in);
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public UI() {
     }
@@ -159,11 +160,11 @@ public class UI {
     }
 
     public void bookMenu() {
-        infiniteSpace();
-        bannerUI();
-
         int option = -1;
         while (option != 0) {
+            infiniteSpace();
+            bannerUI();
+
             System.out.println("[1] - Cadastrar book");
             System.out.println("[2] - Lista de books");
             System.out.println("[3] - Pesquisar book");
@@ -207,17 +208,14 @@ public class UI {
     }
 
     public void authorMenu() {
-        infiniteSpace();
-        bannerUI();
-
         int option = -1;
         while (option != 0) {
             System.out.println("[1] - Add author");
-            System.out.println("[2] - Lista de authors");
-            System.out.println("[3] - Pesquisar author");
-            System.out.println("[4] - Deletar author");
-            System.out.println("[5] - Editar author");
-            System.out.println("[0] - Voltar");
+            System.out.println("[2] - List de authors");
+            System.out.println("[3] - Search author");
+            System.out.println("[4] - Delete author");
+            System.out.println("[5] - Edit author");
+            System.out.println("[0] - Back");
             System.out.print("Enter: ");
             option = sc.nextInt();
 
@@ -334,8 +332,7 @@ public class UI {
             int isbn = sc.nextInt();
             sc.nextLine();
             if (bs.searchBook(isbn) != null) {
-                System.out.println("The indicated book already exists");
-                enterToContinue();
+                throw new DbException("The indicated book already exists");
             }
             System.out.print("Enter book title: ");
             String title = sc.nextLine();
@@ -368,8 +365,9 @@ public class UI {
             System.out.println("Error: Invalid date format. Please use dd/mm/yyyy.");
             sc.nextLine();
         } catch (RuntimeException e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            sc.nextLine();
+            System.out.println("Error: " + e.getMessage());
+            enterToContinue();
+            System.out.println();
         }
     }
 

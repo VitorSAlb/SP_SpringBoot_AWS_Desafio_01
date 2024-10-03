@@ -1,6 +1,7 @@
 package models.services;
 
 import db.DB;
+import models.dao.DaoFactory;
 import models.dao.impl.BookDaoJ;
 import models.entities.books.Book;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class BookService {
 
-    private BookDaoJ bookDAO = new BookDaoJ(DB.getEntityManager());
+    private final BookDaoJ bookDAO = DaoFactory.createBookDao();
 
     public void newBook(Book book) {
         bookDAO.insert(book);

@@ -1,7 +1,7 @@
 package models.dao.impl;
 
 import db.DbException;
-import models.dao.AuthorDao;
+import models.dao.genericDAO;
 import models.entities.persons.Author;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
-public class AuthorDaoJ implements AuthorDao {
+public class AuthorDaoJ implements genericDAO<Author> {
 
     private EntityManager em;
 
@@ -26,7 +26,7 @@ public class AuthorDaoJ implements AuthorDao {
                 em.getTransaction().begin();
                 em.persist(author);
                 em.getTransaction().commit();
-                System.out.println("Done, insert! ID gerado: " + author.getId());
+                System.out.println("Done, insert! Generated ID: " + author.getId());
             } catch (RuntimeException e) {
                 if (em.getTransaction().isActive()) {
                     em.getTransaction().rollback();
@@ -53,10 +53,29 @@ public class AuthorDaoJ implements AuthorDao {
     }
 
     @Override
+    public void deleteById(Integer id) {
+        Author a = findById(id);
+        try{
+            // System.out.println("Test => " + a.getName());
+
+            if(a.getId() != null) {
+                em.getTransaction().begin();
+                em.remove(a);
+                em.getTransaction().commit();
+                System.out.println("Deleted Author name: " + a.getName());
+            } else {
+                System.out.println("Error delete: Author with Id: " + id + " does not exist!");
+            }
+        } catch (RuntimeException e) {
+            throw new DbException("Error delete: " + e.getMessage());
+        }
+    }
+
+    @Override
     public void deleteByName(String name) {
         Author a = findByName(name);
         try{
-            System.out.println("Test => " + a.getName());
+            //System.out.println("Test => " + a.getName());
 
             if(a.getId() != null) {
                 em.getTransaction().begin();
@@ -69,7 +88,6 @@ public class AuthorDaoJ implements AuthorDao {
         } catch (RuntimeException e) {
             throw new DbException("Error delete: " + e.getMessage());
         }
-
     }
 
     @Override
