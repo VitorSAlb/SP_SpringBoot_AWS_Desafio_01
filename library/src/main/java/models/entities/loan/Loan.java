@@ -34,12 +34,12 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Book book, Member member, LocalDateTime loanDate, StateLoan stateLoan) {
+    public Loan(Book book, Member member, LocalDateTime loanDate) {
         this.book = book;
         this.member = member;
         this.loanDate = loanDate;
         this.returnDate = loanDate.plusDays(5);
-        this.stateLoan = stateLoan;
+        this.stateLoan = StateLoan.ACTIVE;
         this.fine = 0.0;
     }
 
@@ -107,21 +107,4 @@ public class Loan {
                 ", fine=" + fine +
                 '}';
     }
-
-    //VERIFICAR ISSO DAQ, NN SEI SE VAI FUNICONAR NA CLASSE BOOK TBM
-    public void loanBook(){
-        if (book.getQuantity() <= 0) {
-            throw new DefaultException("This book isn't available for loan. Book ISBN: " + book.getIsbn());
-        }
-        book.loanBook(book);
-        this.loanDate = LocalDateTime.now();
-        this.stateLoan = StateLoan.ACTIVE;
-    }
-
-    public void returnBook() {
-        book.returnBook();
-        this.stateLoan = StateLoan.COMPLETED;
-    }
-
-
 }

@@ -52,4 +52,15 @@ public class LoanService {
         bs.updateBook(book);
     }
 
+    public Loan findLoan(Member member, Book book) {
+        List<Loan> listL = loanDAO.findLoansByMember(member);
+        Loan loan = listL.stream().filter(l -> l.getBook().getIsbn().equals(book.getIsbn())).findFirst().orElse(null);
+
+        if (loan == null) {
+            throw new DefaultException("No loan found for book: " + book.getIsbn());
+        }
+
+        return loan;
+    }
+
 }

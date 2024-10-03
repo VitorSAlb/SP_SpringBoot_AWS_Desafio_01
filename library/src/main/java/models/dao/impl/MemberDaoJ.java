@@ -90,10 +90,10 @@ public class MemberDaoJ implements GenericDAO<Member> {
     }
 
     @Override
-    public Member findByName(String name) {
+    public Member findByName(String email) {
         try {
-            Query query = em.createQuery("SELECT m FROM Member m WHERE m.name = :name");
-            query.setParameter("name", name);
+            Query query = em.createQuery("SELECT m FROM Member m WHERE m.email = :email");
+            query.setParameter("email", email);
             return (Member) query.getSingleResult();
         } catch (Exception e) {
             return null;

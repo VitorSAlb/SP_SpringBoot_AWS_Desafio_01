@@ -36,8 +36,8 @@ public class MemberService {
         return memberDao.findById(id);
     }
 
-    public Member searchMember(String name) {
-        return memberDao.findByName(name);
+    public Member searchMember(String email) {
+        return memberDao.findByName(email);
     }
 
     public List<Member> listMembers() {
