@@ -1,6 +1,6 @@
 package models.dao.impl;
 
-import db.DbException;
+import exception.DefaultException;
 import models.dao.genericDAO;
 import models.entities.persons.Author;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AuthorDaoJ implements genericDAO<Author> {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public AuthorDaoJ(EntityManager em) {
         this.em = em;
@@ -31,7 +31,7 @@ public class AuthorDaoJ implements genericDAO<Author> {
                 if (em.getTransaction().isActive()) {
                     em.getTransaction().rollback();
                 }
-                throw new DbException("Error insert: " + e.getMessage());
+                throw new DefaultException("Error insert: " + e.getMessage());
             }
         } else {
             System.out.println("Author: " + a.getName() + " already exists!");
@@ -40,16 +40,7 @@ public class AuthorDaoJ implements genericDAO<Author> {
 
     @Override
     public void update(Author author) {
-        EntityTransaction transaction = em.getTransaction();
 
-        try {
-            transaction.begin();
-            em.merge(author);
-            transaction.commit();
-            System.out.println("Update is done!");
-        } catch (RuntimeException e) {
-            throw new DbException("Error Update: " + e.getMessage());
-        }
     }
 
     @Override
@@ -67,7 +58,7 @@ public class AuthorDaoJ implements genericDAO<Author> {
                 System.out.println("Error delete: Author with Id: " + id + " does not exist!");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error delete: " + e.getMessage());
+            throw new DefaultException("Error delete: " + e.getMessage());
         }
     }
 
@@ -86,7 +77,7 @@ public class AuthorDaoJ implements genericDAO<Author> {
                 System.out.println("Error delete: Author with Name: " + name + " does not exist!");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error delete: " + e.getMessage());
+            throw new DefaultException("Error delete: " + e.getMessage());
         }
     }
 

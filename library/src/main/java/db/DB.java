@@ -1,5 +1,7 @@
 package db;
 
+import exception.DefaultException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,7 +16,7 @@ public class DB {
             entityManager = factory.createEntityManager();
             System.out.println("Connection Stated...");
         } catch (RuntimeException e) {
-            throw new DbException("Error Connection: " + e.getMessage());
+            throw new DefaultException("Error Connection: " + e.getMessage());
         }
     }
 
@@ -25,7 +27,7 @@ public class DB {
                 System.out.println("EntityManager closed");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error while closing EntityManager: " + e.getMessage());
+            throw new DefaultException("Error while closing EntityManager: " + e.getMessage());
         }
     }
 
@@ -36,7 +38,7 @@ public class DB {
                 System.out.println("EntityManagerFactory closed");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error while closing EntityManagerFactory: " + e.getMessage());
+            throw new DefaultException("Error while closing EntityManagerFactory: " + e.getMessage());
         }
     }
 

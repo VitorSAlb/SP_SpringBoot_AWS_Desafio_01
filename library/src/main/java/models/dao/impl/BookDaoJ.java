@@ -1,6 +1,6 @@
 package models.dao.impl;
 
-import db.DbException;
+import exception.DefaultException;
 import models.dao.genericDAO;
 import models.entities.books.Book;
 
@@ -30,7 +30,7 @@ public class BookDaoJ implements genericDAO<Book> {
                 em.getTransaction().commit();
                 System.out.println("Done, Insert!");
             } catch (RuntimeException e) {
-                throw new DbException("Error: " + e.getMessage());
+                throw new DefaultException("Error: " + e.getMessage());
             }
         } else {
             System.out.println("Book: " + b.getTitle() + " already exists!");
@@ -49,7 +49,7 @@ public class BookDaoJ implements genericDAO<Book> {
             transaction.commit();
             System.out.println("Update is done!");
         } catch (RuntimeException e) {
-            throw new DbException(e.getMessage());
+            throw new DefaultException(e.getMessage());
         }
 
     }
@@ -66,10 +66,10 @@ public class BookDaoJ implements genericDAO<Book> {
                 em.getTransaction().commit();
                 System.out.println("Deleted Book name: " + b.getTitle());
             } else {
-                throw new DbException("Error: Book with Isbn: " + Id + " does note exist!");
+                throw new DefaultException("Error: Book with Isbn: " + Id + " does note exist!");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error: Unexpected error!");
+            throw new DefaultException("Error: Unexpected error!");
         }
     }
 
@@ -87,7 +87,7 @@ public class BookDaoJ implements genericDAO<Book> {
                 System.out.println("Error delete: Book with Name: " + name + " does not exist!");
             }
         } catch (RuntimeException e) {
-            throw new DbException("Error delete: " + e.getMessage());
+            throw new DefaultException("Error delete: " + e.getMessage());
         }
 
     }

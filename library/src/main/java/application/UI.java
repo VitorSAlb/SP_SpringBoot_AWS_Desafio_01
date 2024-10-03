@@ -1,10 +1,12 @@
 package application;
 
-import db.DbException;
+import exception.DefaultException;
 import models.entities.books.Book;
 import models.entities.persons.Author;
+import models.entities.persons.Member;
 import models.services.AuthorService;
 import models.services.BookService;
+import models.services.MemberService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,7 @@ public class UI {
 
     private static final BookService bs = new BookService();
     private static final AuthorService as = new AuthorService();
+    private static final MemberService ms = new MemberService();
     private static final Scanner sc = new Scanner(System.in);
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -114,6 +117,24 @@ public class UI {
         as.deleteAuthor("Deleted");
         as.listAuthors();
     } // Apagar test
+
+    public void testMember() {
+        Member m1 = new Member("Vitor", "vitor@gmail.com", "71996144188", "Salvador", LocalDate.now());
+        Member m2 = new Member("Lis", "Lis@gmail.com", "23132123", "Salvador", LocalDate.now());
+        Member m3 = new Member("Clara", "clara@gmail.com", "3424342", "Salvador", LocalDate.now());
+        Member m4 = new Member("Geo", "geo@gmail.com", "1321231", "Salvador", LocalDate.now());
+        ms.newMember(m1);
+        ms.newMember(m2);
+        ms.newMember(m3);
+        ms.newMember(m4);
+
+        Member mU = ms.searchMember("geo");
+        mU.setName("Carlos");
+        mU.setEmail("carlos@gmail.com");
+        System.out.println(as.searchAuthor("carlos"));
+        ms.deleteMember("Clara");
+        ms.listMembers();
+    }
 
     public void bannerUI() {
         System.out.println("-------------------------");
@@ -332,7 +353,7 @@ public class UI {
             int isbn = sc.nextInt();
             sc.nextLine();
             if (bs.searchBook(isbn) != null) {
-                throw new DbException("The indicated book already exists");
+                throw new DefaultException("The indicated book already exists");
             }
             System.out.print("Enter book title: ");
             String title = sc.nextLine();

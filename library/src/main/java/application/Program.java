@@ -18,10 +18,11 @@ public class Program {
         AuthorService as = new AuthorService();
         BookService bs = new BookService();
 
-        ui.infiniteSpace();
-        ui.bannerUI();
-        ui.mainMenu();
+//        ui.infiniteSpace();
+//        ui.bannerUI();
+//        ui.mainMenu();
 
+        ui.testMember();
         //ui.createBookUI();
 
 

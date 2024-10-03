@@ -1,5 +1,6 @@
 package models.entities.books;
 
+import exception.DefaultException;
 import models.entities.persons.Author;
 
 import javax.persistence.*;
@@ -109,5 +110,17 @@ public class Book implements Comparable<Book> {
                 ", author=" + author.getName() +
                 ", gender='" + gender + '\'' +
                 '}';
+    }
+
+    //VERIFICAR ISSO DAQ, NN SEI SE VAI FUNICONAR NA CLASSE LOAN TBM
+    public void loanBook(Book book) {
+        if (quantity <= 0 ){
+            throw new DefaultException("This book isn't available for loan. Book ISBN: " + book.getIsbn());
+        }
+        quantity--;
+    }
+
+    public void returnBook() {
+        quantity++;
     }
 }
