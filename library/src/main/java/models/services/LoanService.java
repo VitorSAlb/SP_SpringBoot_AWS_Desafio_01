@@ -8,9 +8,12 @@ import models.entities.enums.StateLoan;
 import models.entities.loan.Loan;
 import models.entities.persons.Member;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 
 public class LoanService {
 
@@ -21,6 +24,15 @@ public class LoanService {
     }
 
     public void newLoan(Loan loan) {
+
+        Set<Loan> loasn = loan.getMember().getLoans();
+
+        for (Loan l: loasn) {
+            if (l.getFine() > 0.0) {
+                throw new DefaultException("We cannot make the loan because the member has an unpaid fine!");
+            }
+        }
+
         Book book = loan.getBook();
 
         if(loan.getBook().getQuantity() <= 0 ) {
@@ -39,13 +51,21 @@ public class LoanService {
 
     public void returnLoan(Loan loan, LocalDateTime returnLDT) {
 
-        if (returnLDT.isAfter(loan.getLoanDate().plusDays(5))) {
-            double fine = (returnLDT.getDayOfMonth() - loan.getReturnDate().getDayOfMonth()) * 5.0;
-            loan.setFine(fine);
+        if (returnLDT.isBefore(loan.getLoanDate())) {
+            throw new DefaultException("The return date cannot be before the loan date!");
         }
+
+        LocalDateTime dueDate = loan.getLoanDate().plusDays(5);
 
         loan.setReturnDate(returnLDT);
         loan.setStateLoan(StateLoan.COMPLETED);
+        loan.setFine(0.0);
+
+        if (returnLDT.isAfter(dueDate) && !returnLDT.isEqual(dueDate)) {
+            long overdueDays = java.time.Duration.between(dueDate, returnLDT).toDays();
+            loan.setFine(overdueDays * 5.0);
+        }
+
         loanDAO.update(loan);
 
         Book book = loan.getBook();
@@ -64,4 +84,29 @@ public class LoanService {
         return loan;
     }
 
+    public void verifyLoan(Loan loan) {
+
+        if (loan.getStateLoan() != StateLoan.COMPLETED) {
+            LocalDateTime dueDate = loan.getLoanDate().plusDays(5);
+            LocalDateTime now = LocalDateTime.now();
+
+            LocalDate test1 = loan.getLoanDate().toLocalDate();
+            LocalDate now2 = LocalDate.now();
+
+            if (now.isAfter(dueDate)) {
+                Duration duration = Duration.between(test1.atTime(0,0), now2.atTime(0,0));
+
+                System.out.println(test1);
+                System.out.println(now2);
+                long daysLate = duration.toDays();
+                System.out.println("Days late: " + daysLate);
+
+                double fine = daysLate * 5.0;
+                loan.setFine(fine);
+                loan.setStateLoan(StateLoan.LATE);
+                loanDAO.update(loan);
+            }
+        }
+    }
 }
+

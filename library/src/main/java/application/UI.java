@@ -148,16 +148,17 @@ public class UI {
         String dateTime = "10/03/2024 12:00";
         lc.borrowBook("vitor@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
         lc.borrowBook("lis@gmail.com", 1, LocalDateTime.parse(dateTime, fmt1));
-        lc.borrowBook("carlos@gmail.com", 1, LocalDateTime.parse(dateTime, fmt1));
-        lc.borrowBook("carlos@gmail.com", 2, LocalDateTime.parse(dateTime, fmt1));
+        lc.borrowBook("carlos@gmail.com", 1, LocalDateTime.now());
+        lc.borrowBook("carlos@gmail.com", 2, LocalDateTime.parse("01/09/2024 12:00", fmt1));
 
+        lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse("20/09/2024 12:00", fmt1));
         lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
         lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
-        lc.borrowBook("carlos@gmail.com", 312, LocalDateTime.parse(dateTime, fmt1));
 
 
-        lc.returnBook("vitor@gmail.com", 312, LocalDateTime.parse("14/03/2024 12:00", fmt1));
-        lc.returnBook("lis@gmail.com", 1, LocalDateTime.parse("15/03/2024 12:00", fmt1));
+        lc.returnBook("vitor@gmail.com", 312, LocalDateTime.parse("14/09/2024 12:00", fmt1));
+        lc.returnBook("carlos@gmail.com", 2, LocalDateTime.parse("06/09/2024 12:00", fmt1));
+        lc.returnBook("lis@gmail.com", 1, LocalDateTime.parse("15/09/2024 12:00", fmt1));
 
         //lc.returnBook("carlos@gmail.com", 2, LocalDateTime.parse("17/03/2024 12:00", fmt1));;
     }

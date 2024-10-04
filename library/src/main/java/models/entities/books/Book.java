@@ -18,6 +18,7 @@ public class Book implements Comparable<Book> {
     private String title;
     private LocalDate publishDate;
     private Integer quantity;
+    private Integer quantityLoans = 0;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", nullable = false)
@@ -82,6 +83,14 @@ public class Book implements Comparable<Book> {
         this.gender = gender;
     }
 
+    public Integer getQuantityLoans() {
+        return quantityLoans;
+    }
+
+    public void setQuantityLoans(Integer quantityLoans) {
+        this.quantityLoans = quantityLoans;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,9 +127,11 @@ public class Book implements Comparable<Book> {
             throw new DefaultException("This book isn't available for loan. Book ISBN: " + isbn);
         }
         quantity--;
+        quantityLoans++;
     }
 
     public void returnBook() {
         quantity++;
+        quantityLoans--;
     }
 }
