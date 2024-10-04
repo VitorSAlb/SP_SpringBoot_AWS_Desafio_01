@@ -37,7 +37,7 @@ public class ReportLoansMember implements Report {
             System.out.println("teadasda");
                 ls.verifyLoan(l);
 
-                sb.append("ID: ").append(l.getId()).append(" | State: ")
+                sb.append("ISBN: ").append(l.getBook().getIsbn()).append(" | State: ")
                     .append(l.getStateLoan()).append("\n").append("Borrowed Book: ").append(l.getBook().getTitle())
                     .append(" | Member: ").append(l.getMember().getName()).append("\n")
                     .append("Expected return date: ").append(fmtH.format(l.getLoanDate().plusDays(5)))

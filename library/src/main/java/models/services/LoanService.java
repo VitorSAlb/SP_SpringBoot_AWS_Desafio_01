@@ -28,10 +28,16 @@ public class LoanService {
         Set<Loan> loasn = loan.getMember().getLoans();
 
         for (Loan l: loasn) {
+            if (l.getBook().getIsbn().equals(loan.getBook().getIsbn())) {
+                throw new DefaultException("It's not possible to borrow the same book more than once.");
+            }
+
             if (l.getFine() > 0.0) {
                 throw new DefaultException("We cannot make the loan because the member has an unpaid fine!");
             }
         }
+
+
 
         Book book = loan.getBook();
 
