@@ -3,9 +3,12 @@ package application;
 import models.controllers.AuthorController;
 import models.controllers.BookController;
 import models.controllers.LoanController;
+import models.controllers.MemberController;
 import models.entities.books.Book;
 import models.entities.persons.Author;
 import models.entities.persons.Member;
+import models.entities.reports.Report;
+import models.entities.reports.ReportLoansMember;
 import models.services.AuthorService;
 import models.services.BookService;
 import models.services.MemberService;
@@ -13,6 +16,7 @@ import models.services.MemberService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +29,7 @@ public class UI {
     private static final LoanController lc = new LoanController();
     private static final BookController bc = new BookController();
     private static final AuthorController ac = new AuthorController();
+    private static final MemberController mc = new MemberController();
 
     private static final Scanner sc = new Scanner(System.in);
 
@@ -214,7 +219,7 @@ public class UI {
             bannerUI();
 
             System.out.println("[1] - Add Book");
-            System.out.println("[2] - List of Books");
+            System.out.println("[2] - List Books");
             System.out.println("[3] - Search book");
             System.out.println("[4] - Edit book");
             System.out.println("[0] - Back");
@@ -259,29 +264,34 @@ public class UI {
 
 
             System.out.println("[1] - Add author");
-            System.out.println("[2] - List de authors");
+            System.out.println("[2] - List Authors");
             System.out.println("[3] - Search author");
             System.out.println("[4] - Edit author");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
             option = sc.nextInt();
+            sc.nextLine();
 
             switch (option) {
                 case 1:
                     infiniteSpace();
                     createAuthorUI();
+                    enterToBack();
                     break;
                 case 2:
                     infiniteSpace();
                     listAllAuthorsUI();
+                    enterToBack();
                     break;
                 case 3:
                     infiniteSpace();
-                    //searchAuthorUi(); pesquisar autores
+                    searchAuthorUI();
+                    enterToBack();
                     break;
                 case 4:
                     infiniteSpace();
-                    //editAuthorUi(); editar autor
+                    editAuthorUI();
+                    enterToBack();
                     break;
                 case 0:
                     break;
@@ -293,35 +303,40 @@ public class UI {
     }
 
     public void memberMenu() {
-        infiniteSpace();
-        bannerUI();
-
         int option = -1;
         while (option != 0) {
-            System.out.println("[1] - Lista membros");
-            System.out.println("[2] - Pesquisar por membros");
-            System.out.println("[3] - Deletar membro");
-            System.out.println("[4] - Editar membro");
-            System.out.println("[5] - Lista de membros com livros");
-            System.out.println("[0] - Voltar");
+            infiniteSpace();
+            bannerUI();
+
+            System.out.println("[1] - List Members");
+            System.out.println("[2] - Search Members");
+            System.out.println("[3] - Add Member");
+            System.out.println("[4] - Edit Member");
+            System.out.println("[0] - Back");
             System.out.print("Enter: ");
             option = sc.nextInt();
+            sc.nextLine();
 
             switch (option) {
                 case 1:
-                    //listMembers(); listar membros
+                    infiniteSpace();
+                    listMemberUI();
+                    enterToContinue();
                     break;
                 case 2:
-                    //searchMembers(); pesquisar membro
+                    infiniteSpace();
+                    searchMemberUI();
+                    enterToContinue();
                     break;
                 case 3:
-                    //deleteMember(); deletar membro
+                    infiniteSpace();
+                    createMemberUI();
+                    enterToContinue();
                     break;
                 case 4:
-                    //editMember(); editar membro
-                    break;
-                case 5:
-                    //listMembersWithBooks(); litar membors com livros
+                    infiniteSpace();
+                    editMemberUI();
+                    enterToContinue();
                     break;
                 case 0:
                     break;
@@ -338,26 +353,38 @@ public class UI {
 
         int option = -1;
         while (option != 0) {
-            System.out.println("[1] - Lista de livros emprestados");
-            System.out.println("[2] - Emprestar livro");
-            System.out.println("[3] - Devolver livro");
-            System.out.println("[4] - Relatório");
-            System.out.println("[0] - Voltar");
+            infiniteSpace();
+            bannerUI();
+
+            System.out.println("[1] - List Loans");
+            System.out.println("[2] - Borrow Book");
+            System.out.println("[3] - Return Book");
+            System.out.println("[4] - Report of member");
+            System.out.println("[0] - Back");
             System.out.print("Enter: ");
             option = sc.nextInt();
+            sc.nextLine();
 
             switch (option) {
                 case 1:
-                    //listLoanedBooksUI(); listar livros emprestados
+                    infiniteSpace();
+                    listLoansUI();
+                    enterToContinue();
                     break;
                 case 2:
-                    //loanBookUi(); emprestar livros
+                    infiniteSpace();
+                    borrowBookUi();
+                    enterToContinue();
                     break;
                 case 3:
-                    //returnBook(); devolver livros
+                    infiniteSpace();
+                    returnBookUi();
+                    enterToContinue();
                     break;
                 case 4:
-                    //generateReport(); gerar relatorio
+                    infiniteSpace();
+                    reportUI();
+                    enterToContinue();
                     break;
                 case 0:
                     break;
@@ -389,25 +416,135 @@ public class UI {
     }
 
 //------------------------------------------
+    public void createAuthorUI() {
+    ac.createAuthor();
+}
+
     public void listAllAuthorsUI(){
         ac.listAuthors();
     }
-//-------------------------------------
+
+    public void searchAuthorUI() {
+        ac.searchAuthors();
+    }
+
+    public void editAuthorUI() {
+        Author author = ac.returnSearchAuthors();
+        ac.editAuthor(author);
+    }
 
 //-------------------------------------
 
-    public void borrowBook() {
+    public void createMemberUI() {mc.createMember();}
+
+    public void listMemberUI() { mc.listMembers(); }
+
+    public void searchMemberUI() { mc.searchMember();}
+
+    public void editMemberUI() {
+        Member member = mc.returnSearchMember();
+        mc.editMember(member);
+    }
+
+
+
+//-------------------------------------
+
+    public void borrowBookUi() {
         Book b = bc.searchBook(true);
+        Member m = mc.returnSearchMember();
 
+        System.out.println("Choose the Date Time: ");
+        System.out.println("[1] - Now");
+        System.out.println("[2] - Another date time");
+        System.out.print("Enter: ");
+        int option = sc.nextInt();
+        sc.nextLine();
+
+        LocalDateTime loanDateTime = null;
+
+        switch (option) {
+            case 1:
+                loanDateTime = LocalDateTime.now();
+                System.out.println("Date and time set to: " + loanDateTime);
+                break;
+            case 2:
+                System.out.print("Enter date and hours of loan (dd/MM/yyyy HH:mm): ");
+                String date = sc.nextLine();
+
+                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+                try {
+                    loanDateTime = LocalDateTime.parse(date, fmt1);
+                    System.out.println("Date and time set to: " + loanDateTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
+                    return;
+                }
+                break;
+            default:
+                System.out.println("Invalid option, exiting...");
+                break;
+        }
+
+        lc.borrowBook(m.getEmail(), b.getIsbn(), loanDateTime);
+    }
+
+    public void returnBookUi() {
+        Book b = bc.searchBook(true);
+        Member m = mc.returnSearchMember();
+
+        System.out.println("Choose the Date Time of return: ");
+        System.out.println("[1] - Now");
+        System.out.println("[2] - Another date time");
+        System.out.print("Enter: ");
+        int option = sc.nextInt();
+        sc.nextLine();
+
+        LocalDateTime loanDateTime = null;
+
+        switch (option) {
+            case 1:
+                loanDateTime = LocalDateTime.now();
+                System.out.println("Date and time set to: " + loanDateTime);
+                break;
+            case 2:
+                System.out.print("Enter date and hours of return (dd/MM/yyyy HH:mm): ");
+                String date = sc.nextLine();
+
+                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+                try {
+                    loanDateTime = LocalDateTime.parse(date, fmt1);
+                    System.out.println("Date and time set to: " + loanDateTime);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
+                    return;
+                }
+                break;
+            default:
+                System.out.println("Invalid option, exiting...");
+                break;
+        }
+
+        lc.returnBook(m.getEmail(), b.getIsbn(), loanDateTime);
+    }
+
+    public void listLoansUI(){
+        lc.listLoans();
+    }
+
+    public void reportUI() {
+        Member m = mc.returnSearchMember();
+        ReportLoansMember rm = new ReportLoansMember(m);
+        String report = rm.generateReport();
+        System.out.println(report);
     }
 
 //-------------------------------------
 
 
-    public void createAuthorUI() {
-        infiniteSpace();
-        ac.createAuthor();
-    }
+
 
     public static void infiniteSpace() {
         for (int i = 0; i < 50; i++) {

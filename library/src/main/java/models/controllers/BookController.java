@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static application.UI.enterToContinue;
@@ -211,14 +212,14 @@ public class BookController {
         System.out.print("Enter book title: ");
         String title = sc.nextLine();
 
-        if (title != null) {
+        if (title == null) {
             book.setTitle(title);
         }
 
         System.out.print("Enter the author's name: ");
         String name = sc.nextLine();
 
-        if (name != null) {
+        if (name == null) {
             Author author = as.searchAuthor(name);
             if (author == null) {
                 author = ac.createAuthor(name);
@@ -234,14 +235,14 @@ public class BookController {
         System.out.print("Enter the genre of the book: ");
         String gender = sc.nextLine();
 
-        if (gender != null) {
+        if (gender == null) {
             book.setGender(gender);
         }
 
         System.out.print("Enter book publish date (dd/mm/yyyy): ");
         String publishDate = sc.nextLine();
 
-        if (publishDate != null) {
+        if (!Objects.equals(publishDate, "")) {
             book.setPublishDate(LocalDate.parse(publishDate, fmt));
         }
 

@@ -1,6 +1,7 @@
 package models.entities.persons;
 
 import models.entities.books.Book;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "authors")
-public class Author extends Person {
+public class Author extends Person implements Comparable<Author> {
 
     private LocalDate birthDate;
     private String nationality;
@@ -64,5 +65,10 @@ public class Author extends Person {
     @Override
     public String toString() {
         return "| name: " + getName() + " | birthDate: " + birthDate.format(fmt) + " | nationality: '" + nationality + " | biography: '" + biography + " |\n";
+    }
+
+    @Override
+    public int compareTo(@NotNull Author o) {
+        return this.getName().compareToIgnoreCase(o.getName());
     }
 }

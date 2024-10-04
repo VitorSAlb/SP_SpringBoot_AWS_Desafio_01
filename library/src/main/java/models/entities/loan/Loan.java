@@ -7,6 +7,7 @@ import models.entities.persons.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table
@@ -30,6 +31,8 @@ public class Loan {
     @Enumerated(EnumType.STRING)
     private StateLoan stateLoan;
     private Double fine;
+
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public Loan() {
     }
@@ -97,14 +100,6 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Loan{" +
-                "id=" + id +
-                ", book=" + book +
-                ", member=" + member +
-                ", loanDate=" + loanDate +
-                ", returnDate=" + returnDate +
-                ", stateLoan=" + stateLoan +
-                ", fine=" + fine +
-                '}';
+        return "| id: " + id +" | book: " + book.getTitle() + " | member: " + member.getName() + " | Loan Date: " + loanDate.format(fmt) + " | Return Date: " + (returnDate != null ? fmt.format(returnDate) : "---") +  " | Loan State: " + stateLoan + " | Fine: " + String.format("$ %.2f", fine) + " |";
     }
 }

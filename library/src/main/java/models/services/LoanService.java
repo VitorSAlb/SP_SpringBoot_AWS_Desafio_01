@@ -114,5 +114,9 @@ public class LoanService {
             }
         }
     }
+
+    public List<Loan> listAllLoan() {
+        return loanDAO.findAllLoans();
+    }
 }
 

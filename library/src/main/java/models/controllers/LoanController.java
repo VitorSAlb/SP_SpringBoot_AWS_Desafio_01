@@ -2,12 +2,14 @@ package models.controllers;
 
 import models.entities.books.Book;
 import models.entities.loan.Loan;
+import models.entities.persons.Author;
 import models.entities.persons.Member;
 import models.services.BookService;
 import models.services.LoanService;
 import models.services.MemberService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class LoanController {
 
@@ -36,6 +38,23 @@ public class LoanController {
 
         ls.returnLoan(loan, returnDate);
         System.out.println("Loan returned successfully! :)");
+    }
+
+    public void listLoans() {
+        List<Loan> loans = ls.listAllLoan();
+
+        if (loans.isEmpty()) {
+            System.out.println("No loans found.");
+        } else {
+            System.out.println("------------------------------------------------------------------------------------------------------------------");
+            System.out.println("List of Loans");
+            System.out.println("------------------------------------------------------------------------------------------------------------------");
+            int count = 1;
+            for (Loan a: loans) {
+                System.out.println(count + "º - " + a);
+                count++;
+            }
+        }
     }
 
 }

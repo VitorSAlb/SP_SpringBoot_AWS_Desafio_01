@@ -1,18 +1,20 @@
 package models.entities.persons;
 
 import models.entities.loan.Loan;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "members")
-public class Member extends Person {
+public class Member extends Person implements Comparable<Member> {
 
     private String email;
     private String telephone;
@@ -21,6 +23,8 @@ public class Member extends Person {
 
     @OneToMany(mappedBy = "member")
     private Set<Loan> loans = new HashSet<>();
+
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Member() {
     }
@@ -85,14 +89,11 @@ public class Member extends Person {
 
     @Override
     public String toString() {
-        return "Member {" +
-                "Id = '" + getId() + '\'' +
-                ", Name = " + getName() + '\'' +
-                ", email = '" + email + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", address='" + address + '\'' +
-                ", associationDate=" + associationDate +
-                ", loans=" + loans +
-                '}';
+        return "| Name: " + getName() + " | Email: '" + email + " | Telephone: " + telephone + " | Address: " + address + " | Association Date: " + associationDate.format(fmt) + " | Quantity Loans: " + loans.size() + " |";
+    }
+
+    @Override
+    public int compareTo(@NotNull Member o) {
+        return this.getName().compareToIgnoreCase(o.getName());
     }
 }
