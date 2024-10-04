@@ -5,6 +5,7 @@ import models.entities.persons.Author;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,8 @@ public class Book implements Comparable<Book> {
     private Author author;
 
     private String gender;
+
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Book() {
     }
@@ -105,23 +108,20 @@ public class Book implements Comparable<Book> {
     }
 
     @Override
-    public int compareTo(Book otherBook) {
-        return this.isbn.compareTo(otherBook.getIsbn());
+    public int compareTo(Book o) {
+        return this.title.compareToIgnoreCase(o.title);
     }
 
     @Override
     public String toString() {
-        return "Book{" +
-                "isbn=" + isbn +
-                ", title='" + title + '\'' +
-                ", publishDate=" + publishDate +
-                ", quantity=" + quantity +
-                ", author=" + author.getName() +
-                ", gender='" + gender + '\'' +
-                '}';
+        return  "| isbn: " + isbn +
+                " | title: " + title +
+                " | publishDate: " + publishDate.format(fmt) +
+                " | quantity: " + quantity +
+                " | author: " + author.getName() +
+                " | gender: " + gender + " |";
     }
 
-    //VERIFICAR ISSO DAQ, NN SEI SE VAI FUNICONAR NA CLASSE LOAN TBM
     public void loanBook() {
         if (quantity <= 0 ){
             throw new DefaultException("This book isn't available for loan. Book ISBN: " + isbn);

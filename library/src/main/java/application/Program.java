@@ -22,9 +22,9 @@ public class Program {
         BookService bs = new BookService();
         MemberService ms = new MemberService();
 
-//        ui.infiniteSpace();
-//        ui.bannerUI();
-//        ui.mainMenu();
+        ui.infiniteSpace();
+        ui.bannerUI();
+        ui.mainMenu();
 
         //ui.testMember();
         //ui.createBookUI();
@@ -43,10 +43,10 @@ public class Program {
 //        System.out.println(report);
 
         //Report de um member
-        Member member = ms.searchMember("carlos@gmail.com");
-        ReportLoansMember rm = new ReportLoansMember(member);
-        String report = rm.generateReport();
-        System.out.println(report);
+//        Member member = ms.searchMember("carlos@gmail.com");
+//        ReportLoansMember rm = new ReportLoansMember(member);
+//        String report = rm.generateReport();
+//        System.out.println(report);
 
         DB.disconnect();
     }

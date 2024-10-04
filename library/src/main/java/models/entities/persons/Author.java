@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ public class Author extends Person {
 
     @OneToMany(mappedBy = "author")
     private Set<Book> books = new HashSet<>();
+
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Author() {
     }
@@ -60,11 +63,6 @@ public class Author extends Person {
 
     @Override
     public String toString() {
-        return "Author {" +
-                "name = " + getName() +
-                ", birthDate = " + birthDate +
-                ", nationality = '" + nationality + '\'' +
-                ", biography = '" + biography + '\'' +
-                '}';
+        return "| name: " + getName() + " | birthDate: " + birthDate.format(fmt) + " | nationality: '" + nationality + " | biography: '" + biography + " |\n";
     }
 }
