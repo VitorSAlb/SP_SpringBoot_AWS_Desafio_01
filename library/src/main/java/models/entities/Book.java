@@ -1,4 +1,4 @@
-package models.entities.books;
+package models.entities;
 
 import exception.DefaultException;
 import models.entities.persons.Author;

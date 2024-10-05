@@ -1,12 +1,9 @@
 package models.entities.reports;
 
-import models.entities.books.Book;
-import models.entities.persons.Author;
+import models.entities.Book;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ReportBooks implements Report{
 

@@ -3,7 +3,7 @@ package models.dao.impl;
 import exception.DefaultException;
 import models.dao.LoanDAO;
 import models.entities.enums.StateLoan;
-import models.entities.loan.Loan;
+import models.entities.Loan;
 import models.entities.persons.Member;
 
 import javax.persistence.EntityManager;

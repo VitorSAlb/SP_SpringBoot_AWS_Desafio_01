@@ -1,6 +1,6 @@
 package models.entities.persons;
 
-import models.entities.books.Book;
+import models.entities.Book;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;

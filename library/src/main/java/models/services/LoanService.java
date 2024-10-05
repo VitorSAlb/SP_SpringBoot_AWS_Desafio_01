@@ -3,15 +3,14 @@ package models.services;
 import exception.DefaultException;
 import models.dao.DaoFactory;
 import models.dao.impl.LoanDaoJ;
-import models.entities.books.Book;
+import models.entities.Book;
 import models.entities.enums.StateLoan;
-import models.entities.loan.Loan;
+import models.entities.Loan;
 import models.entities.persons.Member;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 

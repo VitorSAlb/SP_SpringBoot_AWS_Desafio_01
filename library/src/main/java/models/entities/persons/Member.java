@@ -1,6 +1,6 @@
 package models.entities.persons;
 
-import models.entities.loan.Loan;
+import models.entities.Loan;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Entity;

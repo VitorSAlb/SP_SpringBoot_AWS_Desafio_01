@@ -1,6 +1,6 @@
 package models.entities.reports;
 
-import models.entities.loan.Loan;
+import models.entities.Loan;
 import models.entities.persons.Member;
 import models.services.LoanService;
 

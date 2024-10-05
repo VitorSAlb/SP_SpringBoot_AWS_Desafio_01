@@ -3,7 +3,7 @@ package models.controllers;
 
 import application.UI;
 import exception.DefaultException;
-import models.entities.books.Book;
+import models.entities.Book;
 import models.entities.persons.Author;
 import models.services.AuthorService;
 import models.services.BookService;

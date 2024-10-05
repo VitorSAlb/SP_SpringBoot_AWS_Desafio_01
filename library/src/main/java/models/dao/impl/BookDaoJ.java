@@ -2,10 +2,9 @@ package models.dao.impl;
 
 import exception.DefaultException;
 import models.dao.GenericDAO;
-import models.entities.books.Book;
+import models.entities.Book;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 

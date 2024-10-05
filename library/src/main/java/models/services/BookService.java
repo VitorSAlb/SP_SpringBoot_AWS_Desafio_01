@@ -1,10 +1,9 @@
 package models.services;
 
-import db.DB;
 import exception.DefaultException;
 import models.dao.DaoFactory;
 import models.dao.impl.BookDaoJ;
-import models.entities.books.Book;
+import models.entities.Book;
 
 import java.util.List;
 

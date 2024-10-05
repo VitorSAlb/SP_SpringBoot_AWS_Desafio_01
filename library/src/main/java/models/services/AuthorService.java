@@ -1,13 +1,11 @@
 package models.services;
 
-import db.DB;
 import exception.DefaultException;
 import models.dao.DaoFactory;
 import models.dao.impl.AuthorDaoJ;
 import models.entities.persons.Author;
 
 import java.util.List;
-import java.util.Objects;
 
 public class AuthorService {
 

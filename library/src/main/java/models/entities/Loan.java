@@ -1,7 +1,5 @@
-package models.entities.loan;
+package models.entities;
 
-import exception.DefaultException;
-import models.entities.books.Book;
 import models.entities.enums.StateLoan;
 import models.entities.persons.Member;
 
