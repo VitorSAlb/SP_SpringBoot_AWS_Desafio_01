@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6189bc8-8bbc-4c9e-8db7-c2ebff75cf77" name="Changes" comment="upload to main" />
+    <list default="true" id="d6189bc8-8bbc-4c9e-8db7-c2ebff75cf77" name="Changes" comment="delete: bad imports" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,32 +43,31 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2mq8f3BLf5180zax8Rr5db9oKk9" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.Program.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vitor/CompassUOL/SP_SpringBoot_AWS_SET_2024/Semana-03/library/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Program.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;features/developer-class&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vitor/CompassUOL/SP_SpringBoot_AWS_SET_2024/Semana-03/library/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vitor\CompassUOL\SP_SpringBoot_AWS_SET_2024\Semana-03\library\src\main\resources" />
@@ -116,8 +115,7 @@
       <workItem from="1727954220837" duration="29321000" />
       <workItem from="1728055358934" duration="3151000" />
       <workItem from="1728059718662" duration="18804000" />
-      <workItem from="1728102199627" duration="2956000" />
-      <workItem from="1728105184886" duration="407000" />
+      <workItem from="1728102199627" duration="2553000" />
     </task>
     <task id="LOCAL-00001" summary="feat(Report): Implements Report Book &amp; Loan by member">
       <option name="closed" value="true" />
@@ -135,15 +133,7 @@
       <option name="project" value="LOCAL" />
       <updated>1728104753502</updated>
     </task>
-    <task id="LOCAL-00003" summary="upload to main">
-      <option name="closed" value="true" />
-      <created>1728105316543</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1728105316543</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,7 +155,6 @@
     <MESSAGE value="feat(Report): implements Report Book &amp; Loan Member" />
     <MESSAGE value="feat(Report): implements Report Book &amp; Loan Member" />
     <MESSAGE value="delete: bad imports" />
-    <MESSAGE value="upload to main" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload to main" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete: bad imports" />
   </component>
 </project>
