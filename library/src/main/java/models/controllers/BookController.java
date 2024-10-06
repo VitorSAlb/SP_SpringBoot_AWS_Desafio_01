@@ -64,11 +64,13 @@ public class BookController {
             enterToContinue();
 
         } catch (InputMismatchException e) {
-            System.out.println("Error: Invalid input. Please enter the correct value.");
+            System.out.println("Invalid input. Please enter the correct value.");
             sc.nextLine();
+            UI.enterToContinue();
         } catch (DateTimeParseException e) {
-            System.out.println("Error: Invalid date format. Please use dd/mm/yyyy.");
+            System.out.println("Invalid date format. Please use dd/mm/yyyy.");
             sc.nextLine();
+            UI.enterToContinue();
         } catch (RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
             enterToContinue();
@@ -96,19 +98,27 @@ public class BookController {
     }
 
     public void searchBook() {
-        boolean loop = true;
+        int option = -1;
         Book book;
 
-        while (loop) {
+        while (option != 3) {
             infiniteSpace();
             System.out.println("What research method do you want to use for the book? (ISBN/title)");
             System.out.println("[1] - ISBN");
             System.out.println("[2] - Title");
             System.out.println("[3] - Exit Search");
             System.out.print("Enter: ");
-            int n = sc.nextInt();
-            sc.nextLine();
-            switch (n) {
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 1 to 3  ");
+                enterToContinue();
+            }
+
+
+            switch (option) {
                 case 1:
                     System.out.print("Enter ISBN number: ");
                     int isbn = sc.nextInt();
@@ -118,7 +128,6 @@ public class BookController {
                         System.out.println("------------------------------------------------------------------------------------------------------------------");
                         System.out.println(book);
                         System.out.println("------------------------------------------------------------------------------------------------------------------");
-                        loop = false;
                     } else {
                         System.out.println("This book ISBN is not available in our library");
                         enterToContinue();
@@ -132,7 +141,6 @@ public class BookController {
                         System.out.println("------------------------------------------------------------------------------------------------------------------");
                         System.out.println(book);
                         System.out.println("------------------------------------------------------------------------------------------------------------------");
-                        loop = false;
                     } else {
                         System.out.println("This book title is not available in our library");
                         enterToContinue();
@@ -141,29 +149,36 @@ public class BookController {
                     break;
                 case 3:
                     System.out.println("Exiting search...");
-                    loop = false;
                     break;
                 default:
-                    System.out.println("You entered an invalid option, try again!");
-                    enterToContinue();
+                    System.out.println("Invalid option. Please try again.");
+                    sc.nextLine();
                     break;
             }
         }
     }
 
     public Book searchBook(Boolean b) {
+        int option = -1;
         Book book;
 
-        while (b) {
+        while (option != 3) {
             UI.infiniteSpace();
             System.out.println("What research method do you want to use for the book? (ISBN/title)");
             System.out.println("[1] - ISBN");
             System.out.println("[2] - Title");
             System.out.println("[3] - Exit Search");
             System.out.print("Enter: ");
-            int n = sc.nextInt();
-            sc.nextLine();
-            switch (n) {
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 1 to 3  ");
+                enterToContinue();
+            }
+
+            switch (option) {
                 case 1:
                     System.out.print("Enter ISBN number: ");
                     int isbn = sc.nextInt();
@@ -192,11 +207,10 @@ public class BookController {
                     break;
                 case 3:
                     System.out.println("Exiting search...");
-                    b = false;
                     return null;
                 default:
-                    System.out.println("You entered an invalid option, try again!");
-                    enterToContinue();
+                    System.out.println("Invalid option. Please try again.");
+                    sc.nextLine();
                     break;
             }
         }
@@ -212,7 +226,7 @@ public class BookController {
         System.out.print("Enter book title: ");
         String title = sc.nextLine();
 
-        if (title == null) {
+        if (!title.isEmpty()) {
             book.setTitle(title);
         }
 
@@ -235,7 +249,7 @@ public class BookController {
         System.out.print("Enter the genre of the book: ");
         String gender = sc.nextLine();
 
-        if (gender == null) {
+        if (!gender.isEmpty()) {
             book.setGender(gender);
         }
 

@@ -38,7 +38,6 @@ public class LoanDaoJ implements LoanDAO {
             em.getTransaction().begin();
             em.merge(loan);
             em.getTransaction().commit();
-            System.out.println("Update done!");
         } catch (RuntimeException e) {
             throw new DefaultException(e.getMessage());
         }

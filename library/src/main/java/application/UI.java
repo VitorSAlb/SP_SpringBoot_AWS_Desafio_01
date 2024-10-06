@@ -1,5 +1,7 @@
 package application;
 
+import db.ImportDB;
+import exception.InputException;
 import models.controllers.*;
 import models.entities.Book;
 import models.entities.persons.Author;
@@ -9,6 +11,7 @@ import models.entities.reports.ReportLoansMember;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI {
@@ -40,9 +43,18 @@ public class UI {
             System.out.println("[2] - Authors");
             System.out.println("[3] - Members");
             System.out.println("[4] - Loans & Reports");
+            System.out.println("[5] - Import DataBase");
             System.out.println("[0] - Exit");
             System.out.print("Enter: ");
-            option = sc.nextInt();
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 5  ");
+                clearBuffer();
+                enterToContinue();
+            }
 
             switch (option) {
                 case 1:
@@ -56,6 +68,10 @@ public class UI {
                     break;
                 case 4:
                     loanMenu();
+                    break;
+                case 5:
+                    importDB();
+                    enterToContinue();
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -79,8 +95,16 @@ public class UI {
             System.out.println("[4] - Edit book");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
-            option = sc.nextInt();
-            sc.nextLine();
+
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 4  ");
+                clearBuffer();
+                enterToContinue();
+            }
 
             switch (option) {
                 case 1:
@@ -124,8 +148,15 @@ public class UI {
             System.out.println("[4] - Edit author");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
-            option = sc.nextInt();
-            sc.nextLine();
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 4  ");
+                clearBuffer();
+                enterToContinue();
+            }
 
             switch (option) {
                 case 1:
@@ -169,8 +200,15 @@ public class UI {
             System.out.println("[4] - Edit Member");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
-            option = sc.nextInt();
-            sc.nextLine();
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 4  ");
+                clearBuffer();
+                enterToContinue();
+            }
 
             switch (option) {
                 case 1:
@@ -217,8 +255,15 @@ public class UI {
             System.out.println("[4] - Report of member");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
-            option = sc.nextInt();
-            sc.nextLine();
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 4  ");
+                clearBuffer();
+                enterToContinue();
+            }
 
             switch (option) {
                 case 1:
@@ -254,7 +299,12 @@ public class UI {
 
 // --------------------------------------------------
     public void createBookUI() {
-        bc.createBook();
+        try {
+            bc.createBook();
+        } catch (RuntimeException e) {
+            System.out.println("Error create a new book!");
+            enterToContinue();
+        }
     }
 
     public void listAllBookUI() {
@@ -267,13 +317,20 @@ public class UI {
 
     public void editBookUI() {
         Book b = bc.searchBook(true);
-        bc.editBook(b);
+        if (b != null ) {
+            bc.editBook(b);
+        }
     }
 
 //------------------------------------------
     public void createAuthorUI() {
-    ac.createAuthor();
-}
+        try {
+            ac.createAuthor();
+        } catch (RuntimeException e) {
+            System.out.println("Error create a new author!");
+            enterToContinue();
+        }
+    }
 
     public void listAllAuthorsUI(){
         ac.listAuthors();
@@ -285,12 +342,21 @@ public class UI {
 
     public void editAuthorUI() {
         Author author = ac.returnSearchAuthors();
-        ac.editAuthor(author);
+        if (author != null) {
+            ac.editAuthor(author);
+        }
     }
 
 //-------------------------------------
 
-    public void createMemberUI() {mc.createMember();}
+    public void createMemberUI() {
+        try {
+            mc.createMember();
+        } catch (RuntimeException e) {
+            System.out.println("Error create a new member!");
+            enterToContinue();
+        }
+    }
 
     public void listMemberUI() { mc.listMembers(); }
 
@@ -298,89 +364,122 @@ public class UI {
 
     public void editMemberUI() {
         Member member = mc.returnSearchMember();
-        mc.editMember(member);
+        if (member != null) {
+            mc.editMember(member);
+        }
     }
 
 //-------------------------------------
 
     public void borrowBookUi() {
         Book b = bc.searchBook(true);
-        Member m = mc.returnSearchMember();
-
-        System.out.println("Choose the Date Time: ");
-        System.out.println("[1] - Now");
-        System.out.println("[2] - Another date time");
-        System.out.print("Enter: ");
-        int option = sc.nextInt();
-        sc.nextLine();
-
-        LocalDateTime loanDateTime = null;
-
-        switch (option) {
-            case 1:
-                loanDateTime = LocalDateTime.now();
-                System.out.println("Date and time set to: " + loanDateTime);
-                break;
-            case 2:
-                System.out.print("Enter date and hours of loan (dd/MM/yyyy HH:mm): ");
-                String date = sc.nextLine();
-
-                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-                try {
-                    loanDateTime = LocalDateTime.parse(date, fmt1);
-                    System.out.println("Date and time set to: " + loanDateTime);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
-                    return;
-                }
-                break;
-            default:
-                System.out.println("Invalid option, exiting...");
-                break;
+        Member m = null;
+        if (b != null) {
+            m = mc.returnSearchMember();
         }
 
-        lc.borrowBook(m.getEmail(), b.getIsbn(), loanDateTime);
+
+        if (m != null) {
+            int option = 0;
+
+            System.out.println("Choose the Date Time: ");
+            System.out.println("[1] - Now");
+            System.out.println("[2] - Another date time");
+            System.out.print("Enter: ");
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 1 & 2 ");
+                clearBuffer();
+                enterToContinue();
+            }
+
+            LocalDateTime loanDateTime = null;
+
+            switch (option) {
+                case 1:
+                    loanDateTime = LocalDateTime.now();
+                    System.out.println("Date and time set to: " + loanDateTime);
+                    break;
+                case 2:
+                    System.out.print("Enter date and hours of loan (dd/MM/yyyy HH:mm): ");
+                    String date = sc.nextLine();
+
+                    DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+                    try {
+                        loanDateTime = LocalDateTime.parse(date, fmt1);
+                        System.out.println("Date and time set to: " + loanDateTime);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid option, exiting...");
+                    break;
+            }
+
+            lc.borrowBook(m.getEmail(), b.getIsbn(), loanDateTime);
+
+        }
     }
 
     public void returnBookUi() {
         Book b = bc.searchBook(true);
-        Member m = mc.returnSearchMember();
+        Member m = null;
 
-        System.out.println("Choose the Date Time of return: ");
-        System.out.println("[1] - Now");
-        System.out.println("[2] - Another date time");
-        System.out.print("Enter: ");
-        int option = sc.nextInt();
-        sc.nextLine();
-
-        LocalDateTime loanDateTime = null;
-
-        switch (option) {
-            case 1:
-                loanDateTime = LocalDateTime.now();
-                System.out.println("Date and time set to: " + loanDateTime);
-                break;
-            case 2:
-                System.out.print("Enter date and hours of return (dd/MM/yyyy HH:mm): ");
-                String date = sc.nextLine();
-
-                DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-                try {
-                    loanDateTime = LocalDateTime.parse(date, fmt1);
-                    System.out.println("Date and time set to: " + loanDateTime);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
-                    return;
-                }
-                break;
-            default:
-                System.out.println("Invalid option, exiting...");
-                break;
+        if (b != null) {
+            m = mc.returnSearchMember();
         }
 
-        lc.returnBook(m.getEmail(), b.getIsbn(), loanDateTime);
+        if (m != null) {
+            int option = 0;
+
+            System.out.println("Choose the Date Time of return: ");
+            System.out.println("[1] - Now");
+            System.out.println("[2] - Another date time");
+            System.out.print("Enter: ");
+
+            try {
+                option = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error reading Input. Valid values are from 0 to 4  ");
+                clearBuffer();
+                enterToContinue();
+            }
+
+            LocalDateTime loanDateTime = null;
+
+            switch (option) {
+                case 1:
+                    loanDateTime = LocalDateTime.now();
+                    System.out.println("Date and time set to: " + loanDateTime);
+                    break;
+                case 2:
+                    System.out.print("Enter date and hours of return (dd/MM/yyyy HH:mm): ");
+                    String date = sc.nextLine();
+
+                    DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+                    try {
+                        loanDateTime = LocalDateTime.parse(date, fmt1);
+                        System.out.println("Date and time set to: " + loanDateTime);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date format. Please use 'dd/MM/yyyy HH:mm'.");
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid option, exiting...");
+                    break;
+            }
+
+            lc.returnBook(m.getEmail(), b.getIsbn(), loanDateTime);
+        }
     }
 
     public void listLoansUI(){
@@ -389,12 +488,24 @@ public class UI {
 
     public void reportUI() {
         Member m = mc.returnSearchMember();
-        ReportLoansMember rm = new ReportLoansMember(m);
-        String report = rm.generateReport();
-        System.out.println(report);
+        if(m != null) {
+            ReportLoansMember rm = new ReportLoansMember(m);
+            String report = rm.generateReport();
+            System.out.println(report);
+        } else {
+            System.out.println("This member not exist!");
+        }
+
     }
 
 //-------------------------------------
+
+    public void importDB() {
+        ImportDB idb = new ImportDB();
+        idb.importMembers();
+        idb.importAuthors();
+        idb.importBooks();
+    }
 
     public static void infiniteSpace() {
         for (int i = 0; i < 50; i++) {
@@ -402,7 +513,10 @@ public class UI {
         }
     }
 
-    public static void enterToContinue(){
+    public static void clearBuffer(){
+        sc.nextLine();
+
+    }public static void enterToContinue(){
         System.out.print("Enter to continue...");
         sc.nextLine();
     }
