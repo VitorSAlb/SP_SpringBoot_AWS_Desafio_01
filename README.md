@@ -50,12 +50,18 @@ if (now.isAfter(dueDate)) {
    ```bash
    cd SP_SpringBoot_AWS_Desafio_01/library
    ```
-3. Install dependencies and build the project:
+#### Run project with cmd
+
+1. Install dependencies and build the project:
    ```bash
    mvn clean install
    ```
 
-4. Run the project:
+2. Run the project:
    ```bash
    mvn exec:java
    ```
+
+#### Run Project with IDE
+
+Access the project with your preferred IDE, install the Maven dependencies and run the project!
