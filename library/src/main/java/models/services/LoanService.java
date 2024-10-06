@@ -101,8 +101,6 @@ public class LoanService {
             if (now.isAfter(dueDate)) {
                 Duration duration = Duration.between(test1.atTime(0,0), now2.atTime(0,0));
 
-                System.out.println(test1);
-                System.out.println(now2);
                 long daysLate = duration.toDays();
                 System.out.println("Days late: " + daysLate);
 

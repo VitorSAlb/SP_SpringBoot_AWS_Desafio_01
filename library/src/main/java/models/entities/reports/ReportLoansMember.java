@@ -24,8 +24,12 @@ public class ReportLoansMember implements Report {
 
     @Override
     public String generateReport() {
-        if (loans == null) {
-            return "The memeber, " + member.getName() + " has no loans!" ;
+        if (member == null) {
+            return "This member not exist!";
+        }
+
+        if (loans.isEmpty()) {
+            return "The member, " + member.getName() + " has no loans!" ;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -34,7 +38,6 @@ public class ReportLoansMember implements Report {
         sb.append("---------------------------\n");
 
         loans.forEach(l -> {
-            System.out.println("teadasda");
                 ls.verifyLoan(l);
 
                 sb.append("ISBN: ").append(l.getBook().getIsbn()).append(" | State: ")

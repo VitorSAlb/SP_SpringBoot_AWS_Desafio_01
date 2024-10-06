@@ -105,14 +105,14 @@ public class AuthorController {
         System.out.print("Enter Author name: ");
         String name = sc.nextLine();
 
-        if (name.length() > 1) {
+        if (!name.isEmpty()) {
             author.setName(name);
         }
 
         System.out.print("Enter the nationality of the author: ");
         String nation = sc.nextLine();
 
-        if (nation.length() > 1) {
+        if (!nation.isEmpty()) {
             author.setNationality(nation);
         }
 
@@ -126,7 +126,7 @@ public class AuthorController {
         System.out.print("Enter the biography of the author: ");
         String bio = sc.nextLine();
 
-        if (bio.length() > 1) {
+        if (!bio.isEmpty()) {
             author.setBiography(bio);
         }
 
