@@ -43,13 +43,25 @@ if (now.isAfter(dueDate)) {
 ### Installation
 
 1. Clone the repository:
-   ```bash
+```bash
    git clone https://github.com/VitorSAlb/SP_SpringBoot_AWS_Desafio_01.git
-   ```
+```
 2. Navigate to the project directory:
-   ```bash
+```bash
    cd SP_SpringBoot_AWS_Desafio_01/library
-   ```
+```
+
+### Create a database "library" 
+   
+1. Access the mysql terminal through the workbench 
+
+2. Create a database "library" 
+```bash
+CREATE DATABASE Library;
+```
+
+NOTE: The tables will be created automatically when you start the project.
+
 #### Run project with cmd
 
 1. Install dependencies and build the project:
@@ -118,6 +130,17 @@ git clone https://github.com/VitorSAlb/SP_SpringBoot_AWS_Desafio_01.git
 ```bash
 cd SP_SpringBoot_AWS_Desafio_01/library
 ```
+### Crie a database "library"
+
+1. Acesse o terminal do mysql pelo workbanch
+
+2. Crie a database "library"
+```bash
+CREATE DATABASE Library;
+´´´
+
+OBS: As tabelas serão criadas automaticamente quando iniciar o projeto.
+
 #### Execute o projeto com cmd
 
 1. Instale as dependências e compile o projeto:
