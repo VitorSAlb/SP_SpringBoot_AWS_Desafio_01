@@ -65,14 +65,14 @@ NOTE: The tables will be created automatically when you start the project.
 #### Run project with cmd
 
 1. Install dependencies and build the project:
-   ```bash
-   mvn clean install
-   ```
+```bash
+mvn clean install
+```
 
 2. Run the project:
-   ```bash
-   mvn exec:java
-   ```
+```bash
+mvn exec:java
+```
 
 #### Run Project with IDE
 
@@ -137,7 +137,7 @@ cd SP_SpringBoot_AWS_Desafio_01/library
 2. Crie a database "library"
 ```bash
 CREATE DATABASE Library;
-´´´
+```
 
 OBS: As tabelas serão criadas automaticamente quando iniciar o projeto.
 
