@@ -6,12 +6,14 @@ import models.controllers.*;
 import models.entities.Book;
 import models.entities.persons.Author;
 import models.entities.persons.Member;
+import models.entities.reports.ReportBooks;
 import models.entities.reports.ReportLoansMember;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -253,6 +255,7 @@ public class UI {
             System.out.println("[2] - Borrow Book");
             System.out.println("[3] - Return Book");
             System.out.println("[4] - Report of member");
+            System.out.println("[5] - Report of books");
             System.out.println("[0] - Back");
             System.out.print("Enter: ");
 
@@ -284,6 +287,11 @@ public class UI {
                 case 4:
                     infiniteSpace();
                     reportUI();
+                    enterToContinue();
+                    break;
+                case 5:
+                    infiniteSpace();
+                    reportBooksUI();
                     enterToContinue();
                     break;
                 case 0:
@@ -496,6 +504,17 @@ public class UI {
             System.out.println("This member not exist!");
         }
 
+    }
+
+    public void reportBooksUI() {
+        Book book = bc.searchBook(true);
+        ReportBooks rb = new ReportBooks(book);
+        try {
+            String text = rb.generateReport();
+            System.out.println(text);
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
 //-------------------------------------
